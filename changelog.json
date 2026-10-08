@@ -51,6 +51,16 @@
           "type": "fix",
           "entries": [
             {
+              "id": "bdfc539",
+              "scope": "fluxa",
+              "text": "Name the Linux executable and packages Fluxa"
+            },
+            {
+              "id": "0b80e01",
+              "scope": "fluxa",
+              "text": "Package the macOS disk image as Fluxa.app"
+            },
+            {
               "id": "4af87fc",
               "scope": "fluxa",
               "text": "Accept only protocol install-config links in QR import"

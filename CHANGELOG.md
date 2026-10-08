@@ -14,6 +14,8 @@
 
 **Bug Fixes**
 
+- **fluxa** Name the Linux executable and packages Fluxa (bdfc539)
+- **fluxa** Package the macOS disk image as Fluxa.app (0b80e01)
 - **fluxa** Accept only protocol install-config links in QR import (4af87fc)
 - **fluxa** Verify the changelog without upstream release tags (5a529bf)
 - **fluxa** Regenerate assets/images/icon.ico from Fluxa logo (ee77774)
