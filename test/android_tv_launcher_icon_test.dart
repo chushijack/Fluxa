@@ -10,14 +10,6 @@ String _androidAttribute(String source, String element, String attribute) {
   ).firstMatch(elementTag)!.group(1)!;
 }
 
-double _androidDoubleAttribute(
-  String source,
-  String element,
-  String attribute,
-) {
-  return double.parse(_androidAttribute(source, element, attribute));
-}
-
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -49,7 +41,7 @@ void main() {
     }
   });
 
-  test('TV adaptive launcher icon stays centered in the safe zone', () {
+  test('TV adaptive launcher icon uses the Fluxa foreground inset', () {
     final adaptiveIcon = File(
       'android/app/src/main/res/'
       'mipmap-television-anydpi-v26/ic_launcher.xml',
@@ -63,40 +55,13 @@ void main() {
       '@color/ic_launcher_background',
     );
 
-    final vector = File(
-      'android/app/src/main/res/drawable/'
-      'ic_launcher_foreground_tv.xml',
+    final foreground = File(
+      'android/app/src/main/res/drawable/ic_launcher_foreground_tv.xml',
     ).readAsStringSync();
-    final scaleX = _androidDoubleAttribute(vector, 'group', 'scaleX');
-    final scaleY = _androidDoubleAttribute(vector, 'group', 'scaleY');
-    final translateX = _androidDoubleAttribute(vector, 'group', 'translateX');
-    final translateY = _androidDoubleAttribute(vector, 'group', 'translateY');
-    final viewportWidth = _androidDoubleAttribute(
-      vector,
-      'vector',
-      'viewportWidth',
+    expect(
+      _androidAttribute(foreground, 'inset', 'drawable'),
+      '@drawable/fluxa_launcher_foreground',
     );
-    final viewportHeight = _androidDoubleAttribute(
-      vector,
-      'vector',
-      'viewportHeight',
-    );
-
-    // Conservative bounds of the current logo, including the curved caps.
-    const logoBounds = ui.Rect.fromLTRB(54, 33, 179, 206.5);
-    final transformedBounds = ui.Rect.fromLTRB(
-      (logoBounds.left * scaleX + translateX) / viewportWidth * 108,
-      (logoBounds.top * scaleY + translateY) / viewportHeight * 108,
-      (logoBounds.right * scaleX + translateX) / viewportWidth * 108,
-      (logoBounds.bottom * scaleY + translateY) / viewportHeight * 108,
-    );
-    const safeZone = ui.Rect.fromLTWH(18, 18, 72, 72);
-
-    expect(transformedBounds.left, greaterThanOrEqualTo(safeZone.left));
-    expect(transformedBounds.top, greaterThanOrEqualTo(safeZone.top));
-    expect(transformedBounds.right, lessThanOrEqualTo(safeZone.right));
-    expect(transformedBounds.bottom, lessThanOrEqualTo(safeZone.bottom));
-    expect(transformedBounds.center.dx, closeTo(safeZone.center.dx, 0.05));
-    expect(transformedBounds.center.dy, closeTo(safeZone.center.dy, 0.05));
+    expect(_androidAttribute(foreground, 'inset', 'inset'), '12%');
   });
 }

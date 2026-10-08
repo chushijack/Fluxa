@@ -119,20 +119,25 @@ Generated output paths, configured in `build.yaml`:
 - `lib/providers/generated/*.g.dart`.
 - `lib/database/generated/*.g.dart`.
 
-Tray and Windows app icons are generated, not hand-edited. `assets_source/images/icon/*.svg` is
-the source of truth; the script needs `rsvg-convert` (librsvg) on `PATH`:
+Tray and Windows app icons are generated, not hand-edited. Fluxa tray statuses `1`–`3` rasterize
+from `assets_source/images/icon/fluxa-tray-status.png` (wrapped by matching `status_*.svg`);
+`status_4` and `app_icon.ico` still need `rsvg-convert` (librsvg) on `PATH`:
 
 ```bash
-dart run tool/generate_status_icons.dart
+dart tool/generate_status_icons.dart
 ```
+
+Use the SDK `dart` executable directly (not `dart run`) so workspace native build hooks are not invoked.
 
 It writes the tray PNGs with Flutter `2.0x/`–`4.0x/` resolution variants to `assets/images/tray/unix/`,
 multi-size tray `.ico` files to `assets/images/tray/windows/`, and `windows/runner/resources/app_icon.ico`
-from `assets/images/icon.png`. macOS draws its menu bar icon as a template, so it skips the ringed color
-icons, whose logo shrinks to a small glyph once only alpha shows: `status_1` renders the bare logo from
-`assets_source/images/icon/glyph.svg` and `status_4` reuses `status_4.svg`, both recolored to black into
-`assets/images/tray/macos/`; the sources keep their colors. `glyph.svg` is also the geometry of the Android notification drawables
-`android/service/src/main/res/drawable/ic.xml` and `ic_service.xml`; change them together. `pubspec.yaml` declares the three tray directories with `platforms:` so each
+from `assets/images/icon.png`. macOS menu bar uses the same Fluxa raster for `status_1` and a monochrome
+`status_4.svg` for safe mode. `glyph.svg` wraps `assets_source/images/icon/fluxa-logo.png`
+(same asset as `docs/fluxa/logo.png`); the script also writes
+`android/service/src/main/res/drawable/fluxa_logo_notification_{white,color}.png` and
+`ic.xml` / `ic_service.xml` bitmaps that reference them, plus phone/TV launcher WebPs,
+`fluxa_launcher_foreground.png`, `ic_banner.png`, `assets/images/icon.png`, macOS
+`AppIcon.appiconset`, and `windows/runner/resources/app_icon.ico`. `pubspec.yaml` declares the three tray directories with `platforms:` so each
 build only bundles the format its tray loads; a new status icon needs a source SVG and an entry in the
 script's `statusIconNames`, nothing in `pubspec.yaml`.
 
