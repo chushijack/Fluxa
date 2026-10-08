@@ -2,6 +2,64 @@
   "schemaVersion": 2,
   "versions": [
     {
+      "version": "1.0.0",
+      "tag": "v1.0.0",
+      "date": "2026-10-08",
+      "prerelease": false,
+      "groups": [
+        {
+          "type": "feat",
+          "entries": [
+            {
+              "id": "8e411da",
+              "scope": "fluxa",
+              "text": "Replace app, tray, and launcher icons with Fluxa artwork"
+            },
+            {
+              "id": "12e5117",
+              "scope": "fluxa",
+              "text": "Rebrand Windows packaging and desktop core binaries"
+            },
+            {
+              "id": "d923442",
+              "scope": "fluxa",
+              "text": "Phase 3 branding and Fluxa about UI"
+            },
+            {
+              "id": "1972efe",
+              "scope": "fluxa",
+              "text": "Hysteria2/TUIC parsers, clipboard import, and l10n"
+            },
+            {
+              "id": "d932ce7",
+              "scope": "fluxa",
+              "text": "Wire share-link import into QR, deep links, and profile DB"
+            },
+            {
+              "id": "08adeaf",
+              "scope": "fluxa",
+              "text": "Add VLESS share-link parser and import service"
+            },
+            {
+              "id": "4429a18",
+              "scope": "fluxa",
+              "text": "Add phase 1 models and Mihomo/FlClash adapters"
+            }
+          ]
+        },
+        {
+          "type": "fix",
+          "entries": [
+            {
+              "id": "ee77774",
+              "scope": "fluxa",
+              "text": "Regenerate assets/images/icon.ico from Fluxa logo"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "version": "0.8.99",
       "tag": "v0.8.99",
       "date": "2026-10-03",

@@ -2,7 +2,7 @@
 
 | Field | Value |
 |-------|--------|
-| Current version | v0.8.99 (pubspec) |
+| Current version | v1.0.0 (pubspec) |
 | Upstream commit | `4b59eca853778d4e7be3de26589252889c899bc5` |
 | Last synced | 2026-10-08 |
 | Upstream URL | https://github.com/chen08209/FlClash |

@@ -1,5 +1,21 @@
 # Changelog
 
+## v1.0.0 (2026-10-08)
+
+**Features**
+
+- **fluxa** Replace app, tray, and launcher icons with Fluxa artwork (8e411da)
+- **fluxa** Rebrand Windows packaging and desktop core binaries (12e5117)
+- **fluxa** Phase 3 branding and Fluxa about UI (d923442)
+- **fluxa** Hysteria2/TUIC parsers, clipboard import, and l10n (1972efe)
+- **fluxa** Wire share-link import into QR, deep links, and profile DB (d932ce7)
+- **fluxa** Add VLESS share-link parser and import service (08adeaf)
+- **fluxa** Add phase 1 models and Mihomo/FlClash adapters (4429a18)
+
+**Bug Fixes**
+
+- **fluxa** Regenerate assets/images/icon.ico from Fluxa logo (ee77774)
+
 ## v0.8.99 (2026-10-03)
 
 **Features**
