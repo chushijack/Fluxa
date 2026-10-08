@@ -51,6 +51,11 @@
           "type": "fix",
           "entries": [
             {
+              "id": "5a529bf",
+              "scope": "fluxa",
+              "text": "Verify the changelog without upstream release tags"
+            },
+            {
               "id": "ee77774",
               "scope": "fluxa",
               "text": "Regenerate assets/images/icon.ico from Fluxa logo"

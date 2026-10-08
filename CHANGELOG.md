@@ -14,6 +14,7 @@
 
 **Bug Fixes**
 
+- **fluxa** Verify the changelog without upstream release tags (5a529bf)
 - **fluxa** Regenerate assets/images/icon.ico from Fluxa logo (ee77774)
 
 ## v0.8.99 (2026-10-03)
