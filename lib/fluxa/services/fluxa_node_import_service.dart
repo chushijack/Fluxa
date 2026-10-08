@@ -1,6 +1,8 @@
 import 'package:fl_clash/fluxa/models/fluxa_node.dart';
 import 'package:fl_clash/fluxa/parsers/fluxa_node_parser.dart';
+import 'package:fl_clash/fluxa/parsers/hysteria2_parser.dart';
 import 'package:fl_clash/fluxa/parsers/shadowsocks_parser.dart';
+import 'package:fl_clash/fluxa/parsers/tuic_parser.dart';
 import 'package:fl_clash/fluxa/parsers/trojan_parser.dart';
 import 'package:fl_clash/fluxa/parsers/vless_parser.dart';
 import 'package:fl_clash/fluxa/parsers/vmess_parser.dart';
@@ -18,6 +20,8 @@ class FluxaNodeImportService {
         VmessParser(),
         TrojanParser(),
         ShadowsocksParser(),
+        Hysteria2Parser(),
+        TuicParser(),
       ],
     );
   }

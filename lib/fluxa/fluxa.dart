@@ -3,6 +3,7 @@ library;
 
 export 'adapters/adapters.dart';
 export 'integration/import_capture.dart';
+export 'integration/import_confirm.dart';
 export 'integration/share_link_scan.dart';
 export 'models/models.dart';
 export 'parsers/parsers.dart';

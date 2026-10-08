@@ -30,3 +30,27 @@ feature/* | fix/* | refactor/*  →  dev  →  main
 git checkout dev && git pull origin dev
 git checkout -b feature/<short-name>
 ```
+
+## Remote on GitHub (`origin`)
+
+**Only these branches may exist on `origin`:**
+
+- `main`
+- `dev`
+
+`feature/*`, `fix/*`, `refactor/*`, `sync/*`, and `release/*` are **local-only** (or short-lived on your machine). **Do not** `git push origin feature/...` or push other topic branches to GitHub.
+
+After merging locally into `dev`:
+
+```bash
+git checkout dev
+git merge feature/<short-name>
+git push origin dev
+# optional release: merge dev → main, then git push origin main
+```
+
+Delete stale remote topic branches if they were pushed by mistake:
+
+```bash
+git push origin --delete feature/<name>
+```

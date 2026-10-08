@@ -760,6 +760,56 @@ class AppLocalizations {
     );
   }
 
+  /// `Import node "{nodeName}"?`
+  String importNodeFromShareLinkTip(Object nodeName) {
+    return Intl.message(
+      'Import node "$nodeName"?',
+      name: 'importNodeFromShareLinkTip',
+      desc: '',
+      args: [nodeName],
+    );
+  }
+
+  /// `Import from clipboard`
+  String get importFromClipboard {
+    return Intl.message(
+      'Import from clipboard',
+      name: 'importFromClipboard',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Import a share link or subscription URL from the clipboard`
+  String get importFromClipboardDesc {
+    return Intl.message(
+      'Import a share link or subscription URL from the clipboard',
+      name: 'importFromClipboardDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Clipboard is empty`
+  String get clipboardImportEmpty {
+    return Intl.message(
+      'Clipboard is empty',
+      name: 'clipboardImportEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Clipboard does not contain a supported import link`
+  String get clipboardImportInvalid {
+    return Intl.message(
+      'Clipboard does not contain a supported import link',
+      name: 'clipboardImportInvalid',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Create`
   String get create {
     return Intl.message('Create', name: 'create', desc: '', args: []);

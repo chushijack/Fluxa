@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:fl_clash/common/common.dart';
 import 'package:fl_clash/fluxa/integration/import_capture.dart';
+import 'package:fl_clash/fluxa/integration/import_confirm.dart';
 import 'package:fl_clash/fluxa/services/fluxa_node_import_service.dart';
 import 'package:fl_clash/enum/enum.dart';
 import 'package:fl_clash/icons/icons.dart';
@@ -10,6 +11,7 @@ import 'package:fl_clash/providers/action.dart';
 import 'package:fl_clash/providers/state.dart';
 import 'package:fl_clash/state.dart';
 import 'package:fl_clash/widgets/widgets.dart';
+import 'package:flutter/services.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -48,6 +50,35 @@ class AddProfileView extends ConsumerWidget {
         unawaited(profilesAction.importCaptureResult(capture));
       });
     }
+  }
+
+  Future<void> _importFromClipboard(WidgetRef ref) async {
+    final appLocalizations = context.appLocalizations;
+    final capture = await readImportCaptureFromClipboard();
+    if (!context.mounted) {
+      return;
+    }
+    if (capture == null) {
+      final empty = await Clipboard.getData(Clipboard.kTextPlain);
+      final message = empty?.text?.trim().isEmpty ?? true
+          ? appLocalizations.clipboardImportEmpty
+          : appLocalizations.clipboardImportInvalid;
+      await dialogs.showMessage(
+        title: appLocalizations.addProfile,
+        message: TextSpan(text: message),
+      );
+      return;
+    }
+    if (!context.mounted) {
+      return;
+    }
+    final confirmed = await confirmImportCapture(context, capture);
+    if (!confirmed) {
+      return;
+    }
+    unawaited(
+      ref.read(profilesActionProvider.notifier).importCaptureResult(capture),
+    );
   }
 
   Future<void> _toAdd(WidgetRef ref) async {
@@ -98,6 +129,12 @@ class AddProfileView extends ConsumerWidget {
           title: Text(appLocalizations.qrcode),
           subtitle: Text(appLocalizations.qrcodeDesc),
           onTap: () => _toScan(ref),
+        ),
+        ListItem(
+          leading: const GlyphIcon(AppGlyphs.paste),
+          title: Text(appLocalizations.importFromClipboard),
+          subtitle: Text(appLocalizations.importFromClipboardDesc),
+          onTap: () => _importFromClipboard(ref),
         ),
         ListItem(
           leading: const GlyphIcon(AppGlyphs.importFile),

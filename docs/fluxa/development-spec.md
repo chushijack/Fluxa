@@ -138,9 +138,11 @@ git checkout dev
 git pull origin dev
 git checkout -b feature/vless-parser
 # … 开发、测试 …
-git push -u origin feature/vless-parser
-# PR / merge → dev
+git checkout dev && git merge feature/vless-parser
+git push origin dev
 ```
+
+GitHub（`origin`）**只保留 `main` 与 `dev`**。`feature/*` 等主题分支仅在本地使用，**不要** `git push origin feature/...`。
 
 发版或需要更新 `main` 时：
 
