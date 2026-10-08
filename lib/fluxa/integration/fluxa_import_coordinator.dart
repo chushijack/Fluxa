@@ -36,24 +36,20 @@ class FluxaImportCoordinator {
     }
     _ref.read(currentPageLabelProvider.notifier).value = PageLabel.profiles;
 
-    await globalState.loadingRun(
-      tag: LoadingTag.profiles,
-      () async {
-        final profile = await _ensureFluxaNodesProfile();
-        final custom = _adapter.toCustomProxy(node, id: snowflake.id);
+    await globalState.loadingRun(tag: LoadingTag.profiles, () async {
+      final profile = await _ensureFluxaNodesProfile();
+      final custom = _adapter.toCustomProxy(node, id: snowflake.id);
 
-        final errors = await _ref
-            .read(coreHandlerProvider)
-            .validateProxies([custom.definition]);
-        if (errors.first.isNotEmpty) {
-          throw MessageException(errors.first);
-        }
+      final errors = await _ref.read(coreHandlerProvider).validateProxies([
+        custom.definition,
+      ]);
+      if (errors.first.isNotEmpty) {
+        throw MessageException(errors.first);
+      }
 
-        _ref.read(customProxiesProvider(profile.id).notifier).put(custom);
-        _ref.read(currentProfileIdProvider.notifier).value = profile.id;
-      },
-      title: currentAppLocalizations.addProfile,
-    );
+      _ref.read(customProxiesProvider(profile.id).notifier).put(custom);
+      _ref.read(currentProfileIdProvider.notifier).value = profile.id;
+    }, title: currentAppLocalizations.addProfile);
   }
 
   Future<Profile> _ensureFluxaNodesProfile() async {
@@ -65,10 +61,12 @@ class FluxaImportCoordinator {
     }
 
     final bytes = Uint8List.fromList(utf8.encode(_minimalProfileYaml));
-    final profile = await Profile.normal(label: fluxaNodesProfileLabel).saveFile(
-      bytes,
-      validate: (path) => _ref.read(coreHandlerProvider).validateConfig(path),
-    );
+    final profile = await Profile.normal(label: fluxaNodesProfileLabel)
+        .saveFile(
+          bytes,
+          validate: (path) =>
+              _ref.read(coreHandlerProvider).validateConfig(path),
+        );
     _ref.read(profilesActionProvider.notifier).putProfile(profile);
     return profile;
   }

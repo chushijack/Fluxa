@@ -38,10 +38,7 @@ class ShadowsocksParser implements FluxaNodeParser {
       protocol: FluxaProtocol.shadowsocks,
       server: host,
       port: port,
-      credentials: {
-        'cipher': method,
-        'password': password,
-      },
+      credentials: {'cipher': method, 'password': password},
       metadata: const {'importSource': 'ss-uri'},
     );
   }

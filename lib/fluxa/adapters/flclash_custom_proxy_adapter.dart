@@ -11,11 +11,7 @@ class FlClashCustomProxyAdapter {
 
   final MihomoProxyAdapter _mihomo;
 
-  CustomProxy toCustomProxy(
-    FluxaNode node, {
-    int? profileId,
-    int? id,
-  }) {
+  CustomProxy toCustomProxy(FluxaNode node, {int? profileId, int? id}) {
     final proxy = CustomProxy.fromDefinition(
       _mihomo.toDefinition(node),
       id: id,

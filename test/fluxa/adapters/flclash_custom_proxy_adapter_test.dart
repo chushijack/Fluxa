@@ -11,10 +11,7 @@ void main() {
       protocol: FluxaProtocol.shadowsocks,
       server: '10.0.0.1',
       port: 8388,
-      credentials: {
-        'cipher': 'aes-256-gcm',
-        'password': 'p',
-      },
+      credentials: {'cipher': 'aes-256-gcm', 'password': 'p'},
     );
 
     final custom = adapter.toCustomProxy(node, id: 42);

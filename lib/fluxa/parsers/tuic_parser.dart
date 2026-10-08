@@ -35,19 +35,21 @@ class TuicParser implements FluxaNodeParser {
         ? Uri.decodeComponent(uri.fragment)
         : 'tuic-$host:$port';
 
-    final credentials = <String, dynamic>{
-      'uuid': uuid,
-      'password': password,
-    };
+    final credentials = <String, dynamic>{'uuid': uuid, 'password': password};
 
-    final congestion = query['congestion_control'] ?? query['congestion-control'];
+    final congestion =
+        query['congestion_control'] ?? query['congestion-control'];
     if (congestion != null && congestion.isNotEmpty) {
       credentials['congestion-controller'] = congestion;
     }
 
     final alpn = query['alpn'];
     if (alpn != null && alpn.isNotEmpty) {
-      credentials['alpn'] = alpn.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
+      credentials['alpn'] = alpn
+          .split(',')
+          .map((e) => e.trim())
+          .where((e) => e.isNotEmpty)
+          .toList();
     }
 
     final tls = <String, dynamic>{};

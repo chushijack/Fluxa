@@ -16,32 +16,26 @@ void main() {
       transport: {'network': 'ws'},
     );
 
-    expect(
-      adapter.toDefinition(node),
-      {
-        'name': 'example-vless',
-        'type': 'vless',
-        'server': 'example.com',
-        'port': 443,
-        'uuid': '6ba85179-2d07-4d0f-a02f-3c4c5b5b5b5b',
-        'tls': true,
-        'servername': 'example.com',
-        'network': 'ws',
-      },
-    );
+    expect(adapter.toDefinition(node), {
+      'name': 'example-vless',
+      'type': 'vless',
+      'server': 'example.com',
+      'port': 443,
+      'uuid': '6ba85179-2d07-4d0f-a02f-3c4c5b5b5b5b',
+      'tls': true,
+      'servername': 'example.com',
+      'network': 'ws',
+    });
   });
 
   test('fromDefinition rebuilds core fields', () {
-    final node = adapter.fromDefinition(
-      {
-        'name': 'n1',
-        'type': 'trojan',
-        'server': '1.2.3.4',
-        'port': 8443,
-        'password': 'secret',
-      },
-      id: 'id-9',
-    );
+    final node = adapter.fromDefinition({
+      'name': 'n1',
+      'type': 'trojan',
+      'server': '1.2.3.4',
+      'port': 8443,
+      'password': 'secret',
+    }, id: 'id-9');
 
     expect(node.id, 'id-9');
     expect(node.name, 'n1');

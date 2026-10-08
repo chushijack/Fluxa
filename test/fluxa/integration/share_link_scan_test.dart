@@ -16,6 +16,9 @@ void main() {
       'flclash://install-config?url=https%3A%2F%2Fexample.com%2Fa.yaml',
     ]);
     expect(result, isA<SubscriptionImportCapture>());
-    expect((result! as SubscriptionImportCapture).url, 'https://example.com/a.yaml');
+    expect(
+      (result! as SubscriptionImportCapture).url,
+      'https://example.com/a.yaml',
+    );
   });
 }

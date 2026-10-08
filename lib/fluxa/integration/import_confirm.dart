@@ -11,10 +11,13 @@ Future<bool> confirmImportCapture(
   final l10n = context.appLocalizations;
   return switch (capture) {
     SubscriptionImportCapture(:final url) => _confirmSubscription(context, url),
-    NodeImportCapture(:final node) => dialogs.showMessage(
-      title: l10n.addProfile,
-      message: TextSpan(text: l10n.importNodeFromShareLinkTip(node.name)),
-    ).then((value) => value == true),
+    NodeImportCapture(:final node) =>
+      dialogs
+          .showMessage(
+            title: l10n.addProfile,
+            message: TextSpan(text: l10n.importNodeFromShareLinkTip(node.name)),
+          )
+          .then((value) => value == true),
   };
 }
 

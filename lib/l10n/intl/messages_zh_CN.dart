@@ -348,9 +348,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "fluxaBasedOnFlClash": MessageLookupByLibrary.simpleMessage(
       "Fluxa 基于 FlClash 开发。",
     ),
-    "fluxaOpenSourceLicenses": MessageLookupByLibrary.simpleMessage(
-      "开源许可说明",
-    ),
+    "fluxaOpenSourceLicenses": MessageLookupByLibrary.simpleMessage("开源许可说明"),
     "fluxaUpstreamProject": MessageLookupByLibrary.simpleMessage(
       "上游项目（FlClash）",
     ),

@@ -19,8 +19,7 @@ const androidNotificationColor =
 const androidNotificationSize = 256;
 const androidLauncherForeground =
     'android/app/src/main/res/drawable/fluxa_launcher_foreground.png';
-const androidBanner =
-    'android/app/src/main/res/mipmap-xhdpi/ic_banner.png';
+const androidBanner = 'android/app/src/main/res/mipmap-xhdpi/ic_banner.png';
 const phoneLauncherMipmaps = {
   'android/app/src/main/res/mipmap-mdpi': 48,
   'android/app/src/main/res/mipmap-hdpi': 72,
@@ -173,11 +172,7 @@ Future<void> _writeDesktopAppIcons(img.Image source) async {
   await appFile.writeAsBytes(appPng);
   stdout.writeln('Generated ${appFile.path}');
   for (final path in [appIconAssetIco, appIconOutput]) {
-    await _writeIcoFromRaster(
-      source,
-      File(path),
-      sizes: icoSizes,
-    );
+    await _writeIcoFromRaster(source, File(path), sizes: icoSizes);
   }
   final macDir = Directory(macosAppIconDir);
   await macDir.create(recursive: true);
@@ -195,24 +190,18 @@ Future<void> _writeAndroidLauncherIcons(img.Image source) async {
   await foregroundFile.writeAsBytes(foreground);
   stdout.writeln('Generated ${foregroundFile.path}');
 
-  for (final MapEntry(key: directory, value: size) in phoneLauncherMipmaps.entries) {
-    await _writeLauncherWebp(
-      source,
-      File('$directory/ic_launcher.webp'),
-      size,
-    );
+  for (final MapEntry(key: directory, value: size)
+      in phoneLauncherMipmaps.entries) {
+    await _writeLauncherWebp(source, File('$directory/ic_launcher.webp'), size);
     await _writeLauncherWebp(
       source,
       File('$directory/ic_launcher_round.webp'),
       size,
     );
   }
-  for (final MapEntry(key: directory, value: size) in tvLauncherMipmaps.entries) {
-    await _writeLauncherWebp(
-      source,
-      File('$directory/ic_launcher.webp'),
-      size,
-    );
+  for (final MapEntry(key: directory, value: size)
+      in tvLauncherMipmaps.entries) {
+    await _writeLauncherWebp(source, File('$directory/ic_launcher.webp'), size);
   }
   await _writeAndroidBanner(source);
 }

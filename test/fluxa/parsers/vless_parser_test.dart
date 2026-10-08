@@ -50,10 +50,7 @@ void main() {
 
     final node = parser.parse(link);
     expect(node.tls['tls'], isTrue);
-    expect(node.tls['reality-opts'], {
-      'public-key': 'abc',
-      'short-id': 'def',
-    });
+    expect(node.tls['reality-opts'], {'public-key': 'abc', 'short-id': 'def'});
   });
 
   test('parses IPv6 host', () {

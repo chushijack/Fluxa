@@ -14,10 +14,7 @@ void main() {
   });
 
   test('unknown scheme throws FormatException', () {
-    expect(
-      () => service.importFromText('trojan://x'),
-      throwsFormatException,
-    );
+    expect(() => service.importFromText('trojan://x'), throwsFormatException);
   });
 
   test('roundtrip to Mihomo definition via adapter', () {

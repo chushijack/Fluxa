@@ -94,7 +94,11 @@ class VlessParser implements FluxaNodeParser {
 
     final alpn = query['alpn'];
     if (alpn != null && alpn.isNotEmpty) {
-      tls['alpn'] = alpn.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
+      tls['alpn'] = alpn
+          .split(',')
+          .map((e) => e.trim())
+          .where((e) => e.isNotEmpty)
+          .toList();
     }
 
     if (security == 'reality') {
@@ -106,7 +110,8 @@ class VlessParser implements FluxaNodeParser {
       tls['reality-opts'] = {
         'public-key': publicKey,
         if (shortId != null && shortId.isNotEmpty) 'short-id': shortId,
-        if (query['spx'] != null && query['spx']!.isNotEmpty) 'spider-x': query['spx'],
+        if (query['spx'] != null && query['spx']!.isNotEmpty)
+          'spider-x': query['spx'],
       };
     }
 
@@ -116,7 +121,10 @@ class VlessParser implements FluxaNodeParser {
     }
   }
 
-  void _applyTransport(Map<String, String> query, Map<String, dynamic> transport) {
+  void _applyTransport(
+    Map<String, String> query,
+    Map<String, dynamic> transport,
+  ) {
     final network = (query['type'] ?? 'tcp').toLowerCase();
     transport['network'] = network;
 

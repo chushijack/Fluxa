@@ -20,7 +20,8 @@ const browserUa =
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
 const packageName = 'com.follow.clash';
 final unixSocketPath = '/tmp/FluxaSocket_${Random().nextInt(10000)}.sock';
-final windowsPipeName = '\\\\.\\pipe\\${FluxaBrand.coreBinaryName}_${_randomPipeId()}';
+final windowsPipeName =
+    '\\\\.\\pipe\\${FluxaBrand.coreBinaryName}_${_randomPipeId()}';
 const helperPort = 47890;
 const helperSocketPath = '/run/fluxa/helper.sock';
 const helperProtocolVersionHeader = FluxaBrand.helperProtocolHeader;

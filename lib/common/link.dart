@@ -33,8 +33,7 @@ class LinkManager {
       if (uri == null) {
         continue;
       }
-      if (protocolSchemes.contains(uri.scheme) ||
-          isFluxaShareLinkText(arg)) {
+      if (protocolSchemes.contains(uri.scheme) || isFluxaShareLinkText(arg)) {
         _pendingUri = uri;
         return;
       }
