@@ -1,0 +1,20 @@
+import 'package:fl_clash/fluxa/models/fluxa_node.dart';
+import 'package:fl_clash/fluxa/parsers/fluxa_node_parser.dart';
+
+/// Orchestrates share-link import into Fluxa nodes (storage wiring comes later).
+class FluxaNodeImportService {
+  FluxaNodeImportService({List<FluxaNodeParser>? parsers})
+    : _parsers = List.unmodifiable(parsers ?? const []);
+
+  final List<FluxaNodeParser> _parsers;
+
+  FluxaNode importFromText(String input) {
+    final trimmed = input.trim();
+    for (final parser in _parsers) {
+      if (parser.canParse(trimmed)) {
+        return parser.parse(trimmed);
+      }
+    }
+    throw FormatException('No parser registered for input', trimmed);
+  }
+}
