@@ -42,6 +42,7 @@ const status4Source = '$sourceDir/status_4.svg';
 const trayBaseSize = 18;
 const trayScales = [1, 2, 3, 4];
 const appIconPng = 'assets/images/icon.png';
+const appIconAssetIco = 'assets/images/icon.ico';
 const appIconOutput = 'windows/runner/resources/app_icon.ico';
 const appIconRasterSize = 512;
 
@@ -171,11 +172,13 @@ Future<void> _writeDesktopAppIcons(img.Image source) async {
   await appFile.parent.create(recursive: true);
   await appFile.writeAsBytes(appPng);
   stdout.writeln('Generated ${appFile.path}');
-  await _writeIcoFromRaster(
-    source,
-    File(appIconOutput),
-    sizes: icoSizes,
-  );
+  for (final path in [appIconAssetIco, appIconOutput]) {
+    await _writeIcoFromRaster(
+      source,
+      File(path),
+      sizes: icoSizes,
+    );
+  }
   final macDir = Directory(macosAppIconDir);
   await macDir.create(recursive: true);
   for (final size in macosAppIconSizes) {

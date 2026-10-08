@@ -136,8 +136,9 @@ from `assets/images/icon.png`. macOS menu bar uses the same Fluxa raster for `st
 (same asset as `docs/fluxa/logo.png`); the script also writes
 `android/service/src/main/res/drawable/fluxa_logo_notification_{white,color}.png` and
 `ic.xml` / `ic_service.xml` bitmaps that reference them, plus phone/TV launcher WebPs,
-`fluxa_launcher_foreground.png`, `ic_banner.png`, `assets/images/icon.png`, macOS
-`AppIcon.appiconset`, and `windows/runner/resources/app_icon.ico`. `pubspec.yaml` declares the three tray directories with `platforms:` so each
+`fluxa_launcher_foreground.png`, `ic_banner.png`, `assets/images/icon.png`,
+`assets/images/icon.ico`, macOS `AppIcon.appiconset`, and
+`windows/runner/resources/app_icon.ico`. `pubspec.yaml` declares the three tray directories with `platforms:` so each
 build only bundles the format its tray loads; a new status icon needs a source SVG and an entry in the
 script's `statusIconNames`, nothing in `pubspec.yaml`.
 
