@@ -10,6 +10,11 @@ import 'render.dart';
 /// structured pipeline and are kept verbatim at the bottom of `CHANGELOG.md`.
 const frozenBoundaryTag = 'v0.8.96';
 
+/// Commit `chore(release): v0.8.99`. Fluxa's remote does not carry the
+/// upstream release tags, so CI uses this commit as the start of `v1.0.0`
+/// when `v0.8.96` cannot be resolved.
+const fluxaHistoryFloor = '68c71b8ef9b7486a224972eb371ff153c6b2de0f';
+
 const changelogDataPath = 'changelog.json';
 
 const changelogMarkdownPath = 'CHANGELOG.md';
@@ -45,10 +50,17 @@ class ChangelogBuildResult {
 }
 
 class ChangelogBuilder {
-  ChangelogBuilder(this.git, {this.boundary = frozenBoundaryTag});
+  ChangelogBuilder(
+    this.git, {
+    this.boundary = frozenBoundaryTag,
+    this.missingBoundaryRevision = fluxaHistoryFloor,
+  });
 
   final Git git;
   final String boundary;
+
+  /// Git revision used when [boundary] is not in this clone.
+  final String missingBoundaryRevision;
 
   ChangelogBuildResult build({PendingVersion? pending}) {
     final boundaryTag = VersionTag.tryParse(boundary);
@@ -62,7 +74,9 @@ class ChangelogBuilder {
 
     if (pending != null && !git.tagExists(pending.tag)) {
       final commits = git.commits(
-        from: stable.isEmpty ? boundaryTag?.name : stable.first.name,
+        from: _resolveFrom(
+          stable.isEmpty ? boundaryTag?.name : stable.first.name,
+        ),
         to: 'HEAD',
       );
       commitIdsByTag[pending.tag] = _idsOf(commits);
@@ -82,7 +96,7 @@ class ChangelogBuilder {
       final previous = index + 1 < stable.length
           ? stable[index + 1].name
           : boundaryTag?.name;
-      final commits = git.commits(from: previous, to: tag.name);
+      final commits = git.commits(from: _resolveFrom(previous), to: tag.name);
       commitIdsByTag[tag.name] = _idsOf(commits);
       versions.add(
         ChangelogVersion(
@@ -103,6 +117,16 @@ class ChangelogBuilder {
 
   Set<String> _idsOf(List<RawCommit> commits) =>
       commits.map((commit) => commit.shortHash).toSet();
+
+  String? _resolveFrom(String? revision) {
+    if (revision == null || git.revisionExists(revision)) {
+      return revision;
+    }
+    if (git.revisionExists(missingBoundaryRevision)) {
+      return missingBoundaryRevision;
+    }
+    return revision;
+  }
 }
 
 final _frozenComment = RegExp(r'\s*<!--.*?-->', dotAll: true);

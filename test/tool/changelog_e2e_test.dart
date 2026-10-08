@@ -58,6 +58,21 @@ void main() {
     boundary: 'v1.0.0',
   ).build(pending: pending);
 
+  test('starts at the history floor when the boundary tag is absent', () {
+    final floor = Process.runSync('git', [
+      'rev-parse',
+      'v1.0.0',
+    ], workingDirectory: repo.path).stdout.toString().trim();
+    final versions = ChangelogBuilder(
+      Git(workingDirectory: repo.path),
+      boundary: 'v0.8.96',
+      missingBoundaryRevision: floor,
+    ).build().changelog.versions;
+
+    expect(versions.map((version) => version.tag), ['v1.1.0', 'v1.0.0']);
+    expect(versions.last.groups, isEmpty);
+  });
+
   test('collects one section per stable tag above the boundary', () {
     final versions = build().changelog.versions;
 

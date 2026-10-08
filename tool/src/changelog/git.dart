@@ -107,6 +107,17 @@ class Git {
   bool tagExists(String name) =>
       _run(['tag', '--list', name]).trim().isNotEmpty;
 
+  /// True when [revision] names a commit, including a tag that was not pushed.
+  bool revisionExists(String revision) {
+    final result = Process.runSync('git', [
+      'rev-parse',
+      '--verify',
+      '--quiet',
+      '$revision^{commit}',
+    ], workingDirectory: workingDirectory);
+    return result.exitCode == 0;
+  }
+
   /// Whether [name] is one of the tags [versionTags] would return.
   ///
   /// [tagExists] answers a different question — a tag on another branch exists
