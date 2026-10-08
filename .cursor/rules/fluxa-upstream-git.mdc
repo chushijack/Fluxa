@@ -12,7 +12,9 @@ alwaysApply: true
 
 ## Branches
 
-Work on `feature/*`, `fix/*`, `refactor/*`, `release/*`. Upstream sync on `sync/flclash-<version>` only — **not** direct large merges on `main`.
+Merge path: **`feature/*` / `fix/*` / `refactor/*` → `dev` → `main`**. See `fluxa-git-branches.mdc`.
+
+Upstream sync on `sync/flclash-<version>` only — merge into **`dev`** after tests, then **`dev` → `main`**. **Not** direct large merges on `main` or `dev`.
 
 ## Sync flow
 

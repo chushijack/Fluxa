@@ -1,0 +1,32 @@
+---
+description: Fluxa Git branches — feature to dev to main; never ship features on main directly
+alwaysApply: true
+---
+
+# Git branches (Fluxa)
+
+Full spec: [docs/fluxa/development-spec.md](../../docs/fluxa/development-spec.md) §4. Summary at repo root: [development-spec.md](../../development-spec.md).
+
+## Long-lived branches
+
+| Branch | Role |
+|--------|------|
+| `dev` | Integration: merge all `feature/*`, `fix/*`, `refactor/*` here first |
+| `main` | Release line: merge from `dev` when stable; not for day-to-day Fluxa features |
+
+## Required flow
+
+```text
+feature/* | fix/* | refactor/*  →  dev  →  main
+```
+
+- Branch **from `dev`**, not from `main`.
+- **Do not** commit new Fluxa product work directly on `main`.
+- Upstream FlClash: **`sync/flclash-<version>`** only — merge upstream there, then into **`dev`**, then **`dev` → `main`** after checks. Never large `upstream/main` merge on `main` or `dev` directly.
+
+## Before starting work
+
+```bash
+git checkout dev && git pull origin dev
+git checkout -b feature/<short-name>
+```

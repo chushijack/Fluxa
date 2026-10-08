@@ -91,10 +91,27 @@ main
 
 ## 4. Git 分支规范
 
-建议：
+### 长期分支
+
+| 分支 | 用途 |
+|------|------|
+| **`dev`** | 日常集成：所有功能/fix 先合入这里，保持可构建、可测 |
+| **`main`** | 发布线：从 `dev` 合并；对外默认可发布/可分发状态 |
+
+Fluxa 功能开发合并路径：
 
 ```text
-main
+feature/*  →  dev  →  main
+fix/*      →  dev  →  main
+refactor/* →  dev  →  main
+```
+
+不要在 `main` 上直接开发 Fluxa 功能（仓库初始化等一次性提交除外）。
+
+### 主题分支（从 `dev` 拉出）
+
+```text
+dev
 │
 ├── feature/*
 ├── fix/*
@@ -114,7 +131,44 @@ sync/flclash-0.8.100
 sync/flclash-0.8.101
 ```
 
-不要直接在 `main` 分支执行 FlClash 上游同步。
+### 日常开发
+
+```bash
+git checkout dev
+git pull origin dev
+git checkout -b feature/vless-parser
+# … 开发、测试 …
+git push -u origin feature/vless-parser
+# PR / merge → dev
+```
+
+发版或需要更新 `main` 时：
+
+```bash
+git checkout main
+git pull origin main
+git merge dev
+git push origin main
+```
+
+### 上游 FlClash 同步
+
+不要直接在 **`main`** 或 **`dev`** 上执行大规模 `merge upstream/main`。
+
+```bash
+git fetch upstream
+git checkout dev
+git pull origin dev
+git checkout -b sync/flclash-<version>
+git merge upstream/main
+# 解决冲突、编译、测试、Fluxa 功能检查
+git checkout dev
+git merge sync/flclash-<version>
+git push origin dev
+# 验证通过后：dev → main
+```
+
+更新 `docs/fluxa/upstream.md` 记录版本与 commit。
 
 ---
 

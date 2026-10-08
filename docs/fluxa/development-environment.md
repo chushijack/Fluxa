@@ -9,10 +9,16 @@ Align tooling with FlClash release CI before building or running tests.
 | `origin` | https://github.com/chushijack/Fluxa |
 | `upstream` | https://github.com/chen08209/FlClash |
 
+## Branches
+
+Daily work: **`feature/*` → `dev` → `main`**. See [development-spec.md](development-spec.md) §4 or repo root [development-spec.md](../../development-spec.md).
+
 ```bash
 git remote -v
 git fetch upstream
 git fetch origin
+git checkout dev
+git pull origin dev
 ```
 
 ## Toolchain (from FlClash README / CI)
