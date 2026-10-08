@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:fl_clash/common/app_localizations.dart';
+import 'package:fl_clash/fluxa/integration/import_capture.dart';
 import 'package:fl_clash/icons/icons.dart';
 import 'package:fl_clash/pages/scan.dart';
 import 'package:fl_clash/widgets/activate_box.dart';
@@ -123,11 +124,18 @@ void main() {
     await tester.pump(const Duration(seconds: 1));
   }
 
+  String? subscriptionUrl(ImportCaptureResult? result) {
+    return switch (result) {
+      SubscriptionImportCapture(:final url) => url,
+      _ => null,
+    };
+  }
+
   /// Pushes the page onto a route so `Navigator.pop` from `_handleBarcode` has
   /// something to pop, and reports what the page popped with.
   Future<void> pumpScanPage(
     WidgetTester tester, {
-    required void Function(String? result) onPopped,
+    required void Function(ImportCaptureResult? result) onPopped,
     VoidCallback? onBelowPopped,
   }) async {
     late BuildContext hostContext;
@@ -155,8 +163,10 @@ void main() {
     }
     unawaited(
       navigator
-          .push<String>(
-            MaterialPageRoute<String>(builder: (_) => const ScanPage()),
+          .push<ImportCaptureResult>(
+            MaterialPageRoute<ImportCaptureResult>(
+              builder: (_) => const ScanPage(),
+            ),
           )
           .then(onPopped),
     );
@@ -225,7 +235,7 @@ void main() {
       await pumpScanPage(
         tester,
         onPopped: (value) {
-          result = value;
+          result = subscriptionUrl(value);
           popped = true;
         },
       );
@@ -243,7 +253,10 @@ void main() {
       tester,
     ) async {
       String? result;
-      await pumpScanPage(tester, onPopped: (value) => result = value);
+      await pumpScanPage(
+        tester,
+        onPopped: (value) => result = subscriptionUrl(value),
+      );
 
       platform.emit(
         _textCapture([
@@ -257,7 +270,10 @@ void main() {
 
     testWidgets('the first profile link in a capture wins', (tester) async {
       String? result;
-      await pumpScanPage(tester, onPopped: (value) => result = value);
+      await pumpScanPage(
+        tester,
+        onPopped: (value) => result = subscriptionUrl(value),
+      );
 
       platform.emit(
         _textCapture(['WIFI:S:home;;', ' https://sub.example/z\n']),
@@ -314,7 +330,7 @@ void main() {
     testWidgets('a capture after the page is closed pops nothing else', (
       tester,
     ) async {
-      String? result = 'unset';
+      ImportCaptureResult? result = const SubscriptionImportCapture('unset');
       var belowPopped = false;
       await pumpScanPage(
         tester,

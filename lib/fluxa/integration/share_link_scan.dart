@@ -30,20 +30,13 @@ ImportCaptureResult? resolveImportCaptureFromTexts(Iterable<String?> values) {
     }
 
     final uri = Uri.tryParse(text);
-    if (uri == null) {
+    if (uri == null || !protocolSchemes.contains(uri.scheme)) {
       continue;
     }
 
     final installUrl = installConfigUrlFromUri(uri)?.trim();
     if (installUrl != null && installUrl.isUrl) {
       return SubscriptionImportCapture(installUrl);
-    }
-
-    if (protocolSchemes.contains(uri.scheme)) {
-      final nested = installConfigUrlFromUri(uri)?.trim();
-      if (nested != null && nested.isUrl) {
-        return SubscriptionImportCapture(nested);
-      }
     }
   }
   return null;
