@@ -51,6 +51,11 @@
           "type": "fix",
           "entries": [
             {
+              "id": "4af87fc",
+              "scope": "fluxa",
+              "text": "Accept only protocol install-config links in QR import"
+            },
+            {
               "id": "5a529bf",
               "scope": "fluxa",
               "text": "Verify the changelog without upstream release tags"

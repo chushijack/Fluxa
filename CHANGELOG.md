@@ -14,6 +14,7 @@
 
 **Bug Fixes**
 
+- **fluxa** Accept only protocol install-config links in QR import (4af87fc)
 - **fluxa** Verify the changelog without upstream release tags (5a529bf)
 - **fluxa** Regenerate assets/images/icon.ico from Fluxa logo (ee77774)
 
