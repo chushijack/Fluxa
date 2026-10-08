@@ -50,6 +50,22 @@ void main() {
     expect(contents.any((item) => item['path'] == 'Fluxa.app'), isTrue);
   });
 
+  test('Linux packages use the Fluxa executable and display name', () {
+    final cmake = File('linux/CMakeLists.txt').readAsStringSync();
+    expect(cmake, contains('set(BINARY_NAME "Fluxa")'));
+
+    for (final format in ['deb', 'rpm', 'appimage']) {
+      final config =
+          loadYaml(
+                File(
+                  'linux/packaging/$format/make_config.yaml',
+                ).readAsStringSync(),
+              )
+              as YamlMap;
+      expect(config['display_name'], 'Fluxa', reason: format);
+    }
+  });
+
   test('windows installer uses Fluxa display and executable names', () {
     final config =
         loadYaml(
