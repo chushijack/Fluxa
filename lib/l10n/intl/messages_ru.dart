@@ -464,7 +464,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "deleteMultipTip": m5,
     "deleteTip": m6,
     "desc": MessageLookupByLibrary.simpleMessage(
-      "Многоплатформенный прокси-клиент на основе ClashMeta: простой и удобный, с открытым исходным кодом и без рекламы.",
+      "Fluxa — многоплатформенный прокси-клиент на базе Clash Meta: простой, с открытым исходным кодом и без рекламы.",
+    ),
+    "fluxaBasedOnFlClash": MessageLookupByLibrary.simpleMessage(
+      "Fluxa основан на FlClash.",
+    ),
+    "fluxaOpenSourceLicenses": MessageLookupByLibrary.simpleMessage(
+      "Лицензии с открытым кодом",
+    ),
+    "fluxaUpstreamProject": MessageLookupByLibrary.simpleMessage(
+      "Исходный проект (FlClash)",
     ),
     "destination": MessageLookupByLibrary.simpleMessage("Назначение"),
     "destinationGeoIP": MessageLookupByLibrary.simpleMessage(
@@ -527,7 +536,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Эти данные обрабатываются и хранятся компанией Google от нашего имени, могут передаваться на серверы за пределами вашей страны или региона (например, в США) и регулируются Политикой конфиденциальности Google и документацией Firebase о конфиденциальности и безопасности. Отчёты о сбоях хранятся до 90 дней; статистика хранится в соответствии с политикой хранения Firebase по умолчанию.",
     ),
     "disclaimerDesc": MessageLookupByLibrary.simpleMessage(
-      "Перед использованием FlClash (далее — «Программа») внимательно прочитайте это заявление и убедитесь, что понимаете его полностью. Нажимая «Согласен», вы подтверждаете, что прочитали, поняли и принимаете все приведённые ниже условия. Если вы не согласны, нажмите «Выход» и прекратите использование Программы.",
+      "Перед использованием Fluxa (далее — «Программа») внимательно прочитайте это заявление и убедитесь, что понимаете его полностью. Нажимая «Согласен», вы подтверждаете, что прочитали, поняли и принимаете все приведённые ниже условия. Если вы не согласны, нажмите «Выход» и прекратите использование Программы.",
     ),
     "disclaimerFirebasePrivacy": MessageLookupByLibrary.simpleMessage(
       "Конфиденциальность и безопасность Firebase",

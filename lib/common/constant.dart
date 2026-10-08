@@ -3,12 +3,15 @@
 import 'dart:math';
 
 import 'package:collection/collection.dart';
-import 'package:fl_clash/common/common.dart';
+import 'package:fl_clash/common/layout.dart';
+import 'package:fl_clash/common/num.dart';
+import 'package:fl_clash/common/system.dart';
 import 'package:fl_clash/enum/enum.dart';
+import 'package:fl_clash/fluxa/brand/fluxa_brand.dart';
 import 'package:fl_clash/models/models.dart';
 import 'package:material_ui/material_ui.dart';
 
-const appName = 'FlClash';
+const appName = FluxaBrand.productName;
 const appHelperService = 'FlClashHelperService';
 const coreManifestName = 'manifest.json';
 const coreName = 'clash.meta';
@@ -118,7 +121,7 @@ const systemDnsRecordKey = 'system_dns_record';
 const bootRecordKey = 'boot_record';
 const defaultSystemDnsFallback = '223.5.5.5';
 const double dialogCommonWidth = 300;
-const repository = 'chen08209/FlClash';
+const repository = FluxaBrand.originRepository;
 const maxMobileWidth = 600;
 const maxLaptopWidth = 840;
 const defaultTestUrl = 'https://www.gstatic.com/generate_204';

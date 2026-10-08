@@ -973,8 +973,38 @@ class AppLocalizations {
   /// `A multi-platform proxy client based on ClashMeta, simple and easy to use, open-source and ad-free.`
   String get desc {
     return Intl.message(
-      'A multi-platform proxy client based on ClashMeta, simple and easy to use, open-source and ad-free.',
+      'Fluxa is a multi-platform proxy client powered by Clash Meta — simple, open-source, and ad-free.',
       name: 'desc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Fluxa is based on FlClash.`
+  String get fluxaBasedOnFlClash {
+    return Intl.message(
+      'Fluxa is based on FlClash.',
+      name: 'fluxaBasedOnFlClash',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Upstream (FlClash)`
+  String get fluxaUpstreamProject {
+    return Intl.message(
+      'Upstream (FlClash)',
+      name: 'fluxaUpstreamProject',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Open-source licenses`
+  String get fluxaOpenSourceLicenses {
+    return Intl.message(
+      'Open-source licenses',
+      name: 'fluxaOpenSourceLicenses',
       desc: '',
       args: [],
     );
@@ -2233,7 +2263,7 @@ class AppLocalizations {
   /// `Before using FlClash ("the Software"), please read this statement carefully and make sure you understand all of it. Tapping "Agree" means you have read, understood, and accept every term below. If you do not agree, tap "Exit" and stop using the Software.`
   String get disclaimerDesc {
     return Intl.message(
-      'Before using FlClash ("the Software"), please read this statement carefully and make sure you understand all of it. Tapping "Agree" means you have read, understood, and accept every term below. If you do not agree, tap "Exit" and stop using the Software.',
+      'Before using Fluxa ("the Software"), please read this statement carefully and make sure you understand all of it. Tapping "Agree" means you have read, understood, and accept every term below. If you do not agree, tap "Exit" and stop using the Software.',
       name: 'disclaimerDesc',
       desc: '',
       args: [],
