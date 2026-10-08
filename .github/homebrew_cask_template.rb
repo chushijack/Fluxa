@@ -1,41 +1,31 @@
-cask "flclash" do
+cask "fluxa" do
   version "VERSION"
+  sha256 arm: "ARM_SHA256",
+         intel: "AMD_SHA256"
 
-  on_macos do
-    arch arm: "arm64", intel: "amd64"
-
-    sha256 arm:   "ARM_SHA256",
-           intel: "AMD_SHA256"
-
-    url "https://github.com/chen08209/FlClash/releases/download/v#{version}/FlClash-#{version}-macos-#{arch}.dmg"
+  on_arm do
+    arch = "arm64"
+  end
+  on_intel do
+    arch = "amd64"
   end
 
-  name "FlClash"
-  desc "Multi-platform proxy client based on ClashMeta"
-  homepage "https://github.com/chen08209/FlClash"
+  url "https://github.com/chushijack/Fluxa/releases/download/v#{version}/Fluxa-#{version}-macos-#{arch}.dmg"
+  name "Fluxa"
+  desc "Cross-platform proxy client (fork of FlClash)"
+  homepage "https://github.com/chushijack/Fluxa"
 
   livecheck do
-    url :url
+    url :homepage
     strategy :github_latest
   end
 
-  depends_on :macos
+  app "Fluxa.app"
 
-  app "FlClash.app"
-
-  postflight_steps do
-    run "/usr/bin/xattr",
-        args:           ["-rd", "com.apple.quarantine", "{{appdir}}/FlClash.app"],
-        writable_paths: ["FlClash.app"],
-        writable_base:  :appdir
+  postflight do
+    system_command "/usr/bin/xattr",
+        args:           ["-rd", "com.apple.quarantine", "{{appdir}}/Fluxa.app"],
+        writable_paths: ["Fluxa.app"],
+        must_succeed:   false
   end
-
-  uninstall quit: "com.follow.clash"
-
-  zap trash: [
-    "~/Library/Application Support/com.follow.clash",
-    "~/Library/Caches/com.follow.clash",
-    "~/Library/Preferences/com.follow.clash.plist",
-    "~/Library/Saved Application State/com.follow.clash.savedState",
-  ]
 end
