@@ -38,6 +38,18 @@ void main() {
     expect(config['helper_name'], 'FluxaHelperService');
   });
 
+  test('macOS disk image packages Fluxa.app', () {
+    final config =
+        loadYaml(
+              File('macos/packaging/dmg/make_config.yaml').readAsStringSync(),
+            )
+            as YamlMap;
+    final contents = (config['contents'] as YamlList).cast<YamlMap>();
+
+    expect(config['title'], 'Fluxa');
+    expect(contents.any((item) => item['path'] == 'Fluxa.app'), isTrue);
+  });
+
   test('windows installer uses Fluxa display and executable names', () {
     final config =
         loadYaml(
