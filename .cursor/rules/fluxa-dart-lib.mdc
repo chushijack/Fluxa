@@ -1,0 +1,33 @@
+---
+description: Dart/Flutter layout, FluxaNode, and import pipelines under lib/
+globs: lib/**/*.dart
+alwaysApply: false
+---
+
+# lib/ layout and domain models
+
+Target structure (migrate gradually):
+
+- `lib/app/` — app shell, router, theme, l10n
+- `lib/core/` — shared config, storage, utils
+- `lib/features/` — product screens (dashboard, nodes, settings, …)
+- `lib/fluxa/` — adapters, parsers, providers, **Fluxa models**
+- `lib/legacy/flclash/` — upstream-aligned code when needed
+
+## FluxaNode (concept)
+
+Unified node abstraction; must not hard-depend on FlClash proxy types in UI.
+
+## Single-node / subscription import
+
+```text
+Input → Parser (fluxa/parsers) → FluxaNode → Storage → Mihomo/FlClash adapter
+```
+
+Example: `vless://` → VLESS parser → `FluxaNode` → adapter → Mihomo config.
+
+Support over time: URL sub, local YAML/JSON, provider, and protocols (VLESS, VMess, Trojan, SS, Hysteria(2), TUIC, …).
+
+## UI
+
+Fluxa-owned screens and copy; no FlClash branding in new UI (except open-source credits in About).

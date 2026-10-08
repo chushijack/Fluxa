@@ -1,0 +1,33 @@
+---
+description: Git remotes, branches, and FlClash upstream sync workflow
+alwaysApply: true
+---
+
+# Upstream Git workflow
+
+## Remotes
+
+- `origin` → Fluxa repository
+- `upstream` → `https://github.com/chen08209/FlClash.git`
+
+## Branches
+
+Work on `feature/*`, `fix/*`, `refactor/*`, `release/*`. Upstream sync on `sync/flclash-<version>` only — **not** direct large merges on `main`.
+
+## Sync flow
+
+```bash
+git fetch upstream
+git checkout -b sync/flclash-<version>
+git merge upstream/main
+```
+
+Then: build, tests, UI, Fluxa features, platform builds. Update `docs/fluxa/upstream.md` (version, commit SHA, date).
+
+## Merge priorities
+
+1. **Keep**: upstream bug/security fixes, core, compatibility, performance.
+2. **Evaluate**: upstream UI/state/config — may conflict with Fluxa design.
+3. **Never overwrite**: Fluxa branding, UI, node system, single-node import, domain models.
+
+Do not force-overwrite Fluxa changes or break `FluxaNode` / profile abstractions to “make sync easy.”

@@ -1,0 +1,35 @@
+---
+description: Fluxa product layer vs FlClash upstream — architecture and where to put code
+alwaysApply: true
+---
+
+# Fluxa core development
+
+Fluxa is an independent product on top of **FlClash (upstream)**. Goal: reuse FlClash now, minimize coupling for a future Rust/Tauri rewrite.
+
+## Layering (required)
+
+```text
+FlClash base → Fluxa adapter → Fluxa models/services → Fluxa UI
+```
+
+- **Fluxa-only logic**: `lib/fluxa/` or `lib/features/` — not scattered edits in legacy FlClash code.
+- **UI** depends on **Fluxa models**, not FlClash internals.
+- Prefer **adapter / extension / wrapper / service** over editing FlClash core.
+
+## Before changing code
+
+1. Classify: FlClash original | Fluxa new | third-party.
+2. Ask: will this hurt `git merge upstream/main` later?
+3. Do not delete features or licenses unless explicitly requested.
+4. Uncertain license → flag; do not guess.
+
+## New feature checklist
+
+| Question | Action |
+|----------|--------|
+| Fluxa-only? | `fluxa/` or `features/` |
+| Reusable from FlClash? | Reuse |
+| Else | Adapter to Mihomo/FlClash config |
+
+Brand: **Fluxa** only in product UI (not FlClash Plus/Pro). GPL-3.0 and upstream attribution stay intact.
