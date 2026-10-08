@@ -300,6 +300,7 @@ button {
   width: 24px;
   height: 24px;
   flex: none;
+  object-fit: contain;
   overflow: visible;
 }
 
@@ -581,6 +582,13 @@ button {
   font-size: clamp(16px, 1.7vw, 18px);
   line-height: 1.6;
   text-wrap: pretty;
+}
+
+.hero-fork {
+  margin: 10px 0 0;
+  color: var(--ink-3);
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 .cta {

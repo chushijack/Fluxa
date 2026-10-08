@@ -284,13 +284,15 @@ while `v<pubspec version>` is still tagged it refuses to collect anything and th
 
 ### Website
 
-`site/` is the GitHub Pages site: a static page that renders `CHANGELOG.md` and the download links in the browser, and
-works as is for local previews. `tool/build_site.sh [dir]` assembles it with the preview images, the app icon,
+`site/` is the Fluxa GitHub Pages site (fork attribution + `chushijack/Fluxa` release links): it renders
+`CHANGELOG.md` and download links in the browser, and works as is for local previews. `tool/build_site.sh [dir]`
+assembles it with the preview images, the app icon,
 `CHANGELOG.md` read at the latest release tag, and a `release.json` of asset names, sizes and digests fetched through
 `gh`. Without `gh` access the page falls back to the newest version in `CHANGELOG.md` and lists the files without sizes.
 It then runs `tool/render_site.mjs` (Node), which writes the English page and a `zh/` copy for search engines: page
 text, the first changelog releases, canonical and `hreflang` links, JSON-LD and `sitemap.xml`, all from the strings,
-changelog parser and release markup in `site/assets/shared.js`. `SITE_URL` overrides the published URL these point at.
+changelog parser and release markup in `site/assets/shared.js`. `SITE_REPOSITORY` (default `chushijack/Fluxa`) and
+`SITE_URL` (default `https://chushijack.github.io/Fluxa`) override release metadata and canonical URLs.
 On the built site each URL keeps its language: the language button links to the other page and carries the section in
 view, the chosen platform and the changelog search. Only the English root sends readers who chose or prefer Chinese on
 to `zh/`, unless its URL carries `?lang=en`: the button on `zh/` links there with it, so getting back to English never

@@ -1,7 +1,9 @@
-globalThis.FlClashSite = (() => {
+globalThis.FluxaSite = (() => {
   'use strict';
 
-  const REPO = 'https://github.com/chen08209/FlClash';
+  const REPO = 'https://github.com/chushijack/Fluxa';
+  const UPSTREAM_REPO = 'https://github.com/chen08209/FlClash';
+  const ARTIFACT_PREFIX = 'Fluxa';
   const FIRST_PAGE = 6;
   const MAX_STAGGER = 16;
   const TYPE_BY_TITLE = {
@@ -17,9 +19,9 @@ globalThis.FlClashSite = (() => {
 
   const STRINGS = {
     en: {
-      pageTitle: 'FlClash – Clash Meta (mihomo) proxy client for Android, Windows, macOS and Linux',
+      pageTitle: 'Fluxa – Clash Meta (mihomo) proxy client forked from FlClash',
       pageDescription:
-        'FlClash is a free, open-source Clash Meta (mihomo) proxy client for Android, Windows, macOS and Linux, with rule routing, TUN mode and subscription import. No ads.',
+        'Fluxa is a GPL-3.0 fork of FlClash: a Clash Meta (mihomo) proxy client for Android, Windows, macOS and Linux, with rule routing, TUN mode and subscription import. No ads.',
       skip: 'Skip to downloads',
       navDownload: 'Download',
       navChangelog: 'Changelog',
@@ -28,14 +30,15 @@ globalThis.FlClashSite = (() => {
       themeLabel: 'Toggle dark mode',
       heroFor: 'for',
       reelLabel: 'Switch platform',
-      heroLede: 'A multi-platform proxy client based on Clash Meta (mihomo). Simple to use, open source and ad-free.',
+      heroLede: 'A cross-platform proxy client forked from FlClash, powered by Clash Meta (mihomo). Open source and ad-free.',
+      heroFork: 'Independent fork of FlClash · GPL-3.0',
       heroOther: 'Other platforms',
       heroReleaseLoading: 'Latest release',
       heroRelease: (v) => `${v} is out · See what’s new`,
       ctaDownload: (p) => `Download for ${p}`,
       ctaChoose: 'Choose a download',
-      ctaIos: 'FlClash does not run on iOS. Pick a build for another device below.',
-      previewAlt: 'FlClash dashboard on a MacBook and a phone',
+      ctaIos: 'Fluxa does not run on iOS. Pick a build for another device below.',
+      previewAlt: 'Fluxa dashboard on a MacBook and a phone',
       fact1Title: 'mihomo core',
       fact1: 'Rule routing, proxy groups and TUN mode.',
       fact2Title: 'Subscriptions',
@@ -43,7 +46,7 @@ globalThis.FlClashSite = (() => {
       fact3Title: 'WebDAV sync',
       fact3: 'Back up and restore your data across devices.',
       fact4Title: 'Open source',
-      fact4: 'Licensed under GPL-3.0, with no ads.',
+      fact4: 'GPL-3.0 fork; credits FlClash upstream.',
       dlTitle: 'Download',
       dlMeta: (v, d) => `Version ${v} · Released ${d}`,
       dlLead: 'The build for this device is already selected. Each file says which devices it is for.',
@@ -102,13 +105,13 @@ globalThis.FlClashSite = (() => {
       footLicense: 'Free and open source under GPL-3.0.',
       footUpdated: 'This page updates with every release.',
       footReleases: 'Releases',
-      footTelegram: 'Telegram channel',
+      footUpstream: 'FlClash upstream',
       stars: (n) => `${n} stars on GitHub`,
     },
     zh: {
-      pageTitle: 'FlClash – 基于 Clash Meta（mihomo）的多平台代理客户端，支持 Android、Windows、macOS、Linux',
+      pageTitle: 'Fluxa – 基于 FlClash 二开的 Clash Meta（mihomo）多平台代理客户端',
       pageDescription:
-        'FlClash 是免费开源的 Clash Meta（mihomo）代理客户端，支持 Android、Windows、macOS 与 Linux，提供规则分流、TUN 模式与订阅导入，没有广告。',
+        'Fluxa 是在 FlClash 基础上二开的 GPL-3.0 客户端，支持 Android、Windows、macOS 与 Linux，提供规则分流、TUN 模式与订阅导入，没有广告。',
       skip: '跳到下载',
       navDownload: '下载',
       navChangelog: '更新日志',
@@ -117,14 +120,15 @@ globalThis.FlClashSite = (() => {
       themeLabel: '切换深色模式',
       heroFor: '适用于',
       reelLabel: '切换平台',
-      heroLede: '基于 Clash Meta（mihomo）内核的多平台代理客户端。简单易用，开源，无广告。',
+      heroLede: '基于 FlClash 二开的跨平台代理客户端，采用 Clash Meta（mihomo）内核。开源，无广告。',
+      heroFork: '基于 FlClash 独立二开 · GPL-3.0',
       heroOther: '其他平台',
       heroReleaseLoading: '最新版本',
       heroRelease: (v) => `${v} 已发布 · 查看更新`,
       ctaDownload: (p) => `下载 ${p} 版`,
       ctaChoose: '选择下载版本',
-      ctaIos: 'FlClash 不支持 iOS，可以在下方选择其他设备的版本。',
-      previewAlt: 'FlClash 仪表盘在 MacBook 与手机上的界面',
+      ctaIos: 'Fluxa 不支持 iOS，可以在下方选择其他设备的版本。',
+      previewAlt: 'Fluxa 在 MacBook 与手机上的界面',
       fact1Title: 'mihomo 内核',
       fact1: '规则分流、代理组与 TUN 模式。',
       fact2Title: '订阅导入',
@@ -132,7 +136,7 @@ globalThis.FlClashSite = (() => {
       fact3Title: 'WebDAV 同步',
       fact3: '在设备之间备份与恢复数据。',
       fact4Title: '开源',
-      fact4: '以 GPL-3.0 协议开源，没有广告。',
+      fact4: 'GPL-3.0 二开，致谢 FlClash 上游。',
       dlTitle: '下载',
       dlMeta: (v, d) => `版本 ${v} · ${d}发布`,
       dlLead: '已为当前设备选好安装包，每个文件都注明了适用的设备。',
@@ -190,7 +194,7 @@ globalThis.FlClashSite = (() => {
       footLicense: '以 GPL-3.0 协议免费开源。',
       footUpdated: '本页随每次发布自动更新。',
       footReleases: '发布页',
-      footTelegram: 'Telegram 频道',
+      footUpstream: 'FlClash 上游',
       stars: (n) => `GitHub 上有 ${n} 个星标`,
     },
   };
@@ -338,5 +342,17 @@ globalThis.FlClashSite = (() => {
     return { html, year };
   }
 
-  return { REPO, FIRST_PAGE, STRINGS, parseChangelog, translate, formatDate, changelogMeta, escapeHtml, timelineHtml };
+  return {
+    REPO,
+    UPSTREAM_REPO,
+    ARTIFACT_PREFIX,
+    FIRST_PAGE,
+    STRINGS,
+    parseChangelog,
+    translate,
+    formatDate,
+    changelogMeta,
+    escapeHtml,
+    timelineHtml,
+  };
 })();

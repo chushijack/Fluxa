@@ -17,8 +17,8 @@ const PAGES = [
 
 const sandbox = {};
 runInNewContext(readFileSync(join(out, 'assets/shared.js'), 'utf8'), sandbox);
-const { REPO, FIRST_PAGE, STRINGS, parseChangelog, changelogMeta, escapeHtml: escape, timelineHtml } =
-  sandbox.FlClashSite;
+const { REPO, UPSTREAM_REPO, FIRST_PAGE, STRINGS, parseChangelog, changelogMeta, escapeHtml: escape, timelineHtml } =
+  sandbox.FluxaSite;
 
 const template = readFileSync(join(out, 'index.html'), 'utf8');
 const versions = parseChangelog(readFileSync(join(out, 'CHANGELOG.md'), 'utf8'));
@@ -37,7 +37,7 @@ function structuredData(t, page) {
   return {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
-    name: 'FlClash',
+    name: 'Fluxa',
     url: siteUrl + page.path,
     description: t.pageDescription,
     inLanguage: page.locale,
@@ -49,7 +49,7 @@ function structuredData(t, page) {
     license: 'https://www.gnu.org/licenses/gpl-3.0.html',
     isAccessibleForFree: true,
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-    sameAs: [REPO],
+    sameAs: [REPO, UPSTREAM_REPO],
   };
 }
 

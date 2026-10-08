@@ -4,8 +4,8 @@
   const PLATFORMS = ['android', 'windows', 'macos', 'linux'];
   const PLATFORM_NAMES = { android: 'Android', windows: 'Windows', macos: 'macOS', linux: 'Linux' };
   const PAGE = 15;
-  const { REPO, FIRST_PAGE, parseChangelog, translate, formatDate, changelogMeta, timelineHtml } =
-    globalThis.FlClashSite;
+  const { REPO, ARTIFACT_PREFIX, FIRST_PAGE, parseChangelog, translate, formatDate, changelogMeta, timelineHtml } =
+    globalThis.FluxaSite;
   const SITE = new URL('..', document.currentScript.src);
 
   const root = document.documentElement;
@@ -133,7 +133,7 @@
     if (!release) return [];
     return buildsFor(platform, arch)
       .map((build) => {
-        const name = `FlClash-${release.version}-${build.id}`;
+        const name = `${ARTIFACT_PREFIX}-${release.version}-${build.id}`;
         const asset = release.assets ? release.assets.get(name) : null;
         if (release.assets && !asset) return null;
         return {
@@ -387,18 +387,6 @@
       case 'android':
         return [
           tip(
-            'tipFdroidTitle',
-            'tipFdroid',
-            el(
-              'p',
-              {},
-              el('a', {
-                href: 'https://chen08209.github.io/FlClash-fdroid-repo/repo?fingerprint=789D6D32668712EF7672F9E58DEEB15FBD6DCEEC5AE7A4371EA72F2AAE8A12FD',
-                text: t('tipFdroidLink'),
-              }),
-            ),
-          ),
-          tip(
             'tipIntentTitle',
             'tipIntent',
             commandBlock(
@@ -409,7 +397,7 @@
           ),
         ];
       case 'macos':
-        return [tip('tipBrewTitle', 'tipBrew', commandBlock('brew tap chen08209/tap\nbrew install --cask flclash'))];
+        return [];
       case 'linux':
         return [
           tip(
@@ -752,7 +740,7 @@
       syncShot();
       field?.refresh();
       try {
-        localStorage.setItem('flclash.theme', next);
+        localStorage.setItem('fluxa.theme', next);
       } catch {}
     };
     if (!document.startViewTransition || reducedMotion.matches) {
@@ -771,7 +759,7 @@
 
   function rememberLang(lang) {
     try {
-      localStorage.setItem('flclash.lang', lang);
+      localStorage.setItem('fluxa.lang', lang);
     } catch {}
   }
 
@@ -823,7 +811,8 @@
 
   function wireGlyph() {
     const glyph = $('.brand .glyph');
-    const last = $('.sig-3', glyph);
+    const last = glyph && $('.sig-3', glyph);
+    if (!last) return;
     glyph.addEventListener('animationend', (event) => {
       if (event.target === last) glyph.classList.remove('enter', 'wave');
     });
@@ -903,7 +892,7 @@
     field = globalThis.FlClashField?.mount($('#field'), {
       avoid: () => [
         taglineBox(),
-        ...[...document.querySelectorAll('#hero-release, #wordmark, .lede, .cta, #cta-note, #facts')]
+        ...[...document.querySelectorAll('#hero-release, #wordmark, .lede, .hero-fork, .cta, #cta-note, #facts')]
           .filter((node) => node.offsetWidth)
           .map(layoutBox),
       ],
