@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:fl_clash/common/common.dart';
+import 'package:fl_clash/fluxa/integration/import_capture.dart';
+import 'package:fl_clash/fluxa/services/fluxa_node_import_service.dart';
 import 'package:fl_clash/enum/enum.dart';
 import 'package:fl_clash/icons/icons.dart';
 import 'package:fl_clash/pages/scan.dart';
@@ -37,10 +39,13 @@ class AddProfileView extends ConsumerWidget {
       unawaited(profilesAction.addProfileFormQrCode());
       return;
     }
-    final url = await BaseNavigator.push(context, const ScanPage());
-    if (url != null) {
+    final capture = await BaseNavigator.push<ImportCaptureResult>(
+      context,
+      const ScanPage(),
+    );
+    if (capture != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        unawaited(profilesAction.addProfileFormURL(url));
+        unawaited(profilesAction.importCaptureResult(capture));
       });
     }
   }
@@ -63,14 +68,22 @@ class AddProfileView extends ConsumerWidget {
         if (value == null || value.isEmpty) {
           return appLocalizations.emptyTip('').trim();
         }
-        if (!value.isUrl) {
-          return appLocalizations.urlTip('').trim();
+        if (value.isUrl) {
+          return null;
         }
-        return null;
+        if (FluxaNodeImportService.withDefaultParsers().canImport(value)) {
+          return null;
+        }
+        return appLocalizations.urlTip('').trim();
       },
     );
     if (res != null) {
-      unawaited(profilesAction.addProfileFormURL(res.url, label: res.label));
+      final capture = resolveImportCaptureFromTexts([res.url]);
+      if (capture != null) {
+        unawaited(profilesAction.importCaptureResult(capture));
+      } else {
+        unawaited(profilesAction.addProfileFormURL(res.url, label: res.label));
+      }
     }
   }
 

@@ -173,10 +173,23 @@ class ProfilesAction extends _$ProfilesAction {
     }
   }
 
+  Future<void> importCaptureResult(ImportCaptureResult result) async {
+    switch (result) {
+      case SubscriptionImportCapture(:final url):
+        await addProfileFormURL(url);
+      case NodeImportCapture(:final node):
+        await FluxaImportCoordinator(ref).importNode(node);
+    }
+  }
+
   Future<void> addProfileFormQrCode() async {
-    final url = await globalState.safeRun(picker.pickerConfigQRCode);
-    if (url == null) return;
-    unawaited(addProfileFormURL(url));
+    final capture = await globalState.safeRun(
+      picker.pickerImportCaptureFromQRCode,
+    );
+    if (capture == null) {
+      return;
+    }
+    unawaited(importCaptureResult(capture));
   }
 
   void reorder(List<Profile> profiles) {

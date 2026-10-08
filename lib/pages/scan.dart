@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:fl_clash/common/common.dart';
+import 'package:fl_clash/fluxa/integration/import_capture.dart';
 import 'package:fl_clash/enum/enum.dart';
 import 'package:fl_clash/icons/icons.dart';
 import 'package:fl_clash/plugins/app.dart';
@@ -107,14 +108,14 @@ class _ScanPageState extends ConsumerState<ScanPage>
     if (_completed || !mounted || capture.barcodes.isEmpty) {
       return;
     }
-    final url = profileUrlFromQrCodes(
+    final result = resolveImportCaptureFromTexts(
       capture.barcodes.map((barcode) => barcode.rawValue),
     );
-    if (url == null) {
+    if (result == null) {
       _showInvalidHint();
       return;
     }
-    _complete(url);
+    _complete(result);
   }
 
   void _handleDetectError(Object error) {
@@ -134,14 +135,14 @@ class _ScanPageState extends ConsumerState<ScanPage>
 
   // `pop` takes the top route, which is another one once this page is closing
   // or a dialog covers it, and a closing page stays mounted until it is gone.
-  void _complete(String url) {
+  void _complete(ImportCaptureResult result) {
     if (ModalRoute.isCurrentOf(context) == false) {
       return;
     }
     _completed = true;
     unawaited(_subscription?.cancel());
     _subscription = null;
-    Navigator.of(context).pop<String>(url);
+    Navigator.of(context).pop<ImportCaptureResult>(result);
   }
 
   Future<void> _pickFromAlbum() async {
@@ -150,9 +151,11 @@ class _ScanPageState extends ConsumerState<ScanPage>
     }
     _picking = true;
     try {
-      final url = await globalState.safeRun(picker.pickerConfigQRCode);
-      if (url != null && mounted && !_completed) {
-        _complete(url);
+      final capture = await globalState.safeRun(
+        picker.pickerImportCaptureFromQRCode,
+      );
+      if (capture != null && mounted && !_completed) {
+        _complete(capture);
       }
     } finally {
       _picking = false;

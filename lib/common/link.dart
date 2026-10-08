@@ -1,38 +1,20 @@
 import 'dart:async';
 
 import 'package:app_links/app_links.dart';
+import 'package:fl_clash/fluxa/integration/import_capture.dart';
+import 'package:fl_clash/fluxa/integration/share_link_scan.dart';
 import 'package:flutter/foundation.dart';
 
 import 'print.dart';
 import 'protocol.dart';
-import 'string.dart';
 
-typedef InstallConfigCallBack = void Function(String url);
+export 'package:fl_clash/fluxa/integration/share_link_scan.dart'
+    show
+        isFluxaShareLinkText,
+        profileUrlFromQrCodes,
+        resolveImportCaptureFromTexts;
 
-String? profileUrlFromQrCodes(Iterable<String?> values) {
-  for (final value in values) {
-    final text = value?.trim();
-    if (text == null || text.isEmpty) {
-      continue;
-    }
-    if (text.isUrl) {
-      return text;
-    }
-    final uri = Uri.tryParse(text);
-    if (uri == null || !protocolSchemes.contains(uri.scheme)) {
-      continue;
-    }
-    final url = _installConfigUrl(uri)?.trim();
-    if (url != null && url.isUrl) {
-      return url;
-    }
-  }
-  return null;
-}
-
-String? _installConfigUrl(Uri uri) {
-  return uri.host == 'install-config' ? uri.queryParameters['url'] : null;
-}
+typedef ImportCaptureCallback = void Function(ImportCaptureResult result);
 
 class LinkManager {
   static LinkManager? _instance;
@@ -48,33 +30,40 @@ class LinkManager {
   void seedInitialLink(List<String> args) {
     for (final arg in args) {
       final uri = Uri.tryParse(arg);
-      if (uri != null && protocolSchemes.contains(uri.scheme)) {
+      if (uri == null) {
+        continue;
+      }
+      if (protocolSchemes.contains(uri.scheme) ||
+          isFluxaShareLinkText(arg)) {
         _pendingUri = uri;
         return;
       }
     }
   }
 
-  Future<void> initAppLinksListen(
-    Function(String url) installConfigCallBack,
-  ) async {
+  Future<void> initAppLinksListen(ImportCaptureCallback callback) async {
     commonPrint.log('initAppLinksListen');
     destroy();
     subscription = uriLinkStream().listen((uri) {
-      _handle(uri, installConfigCallBack);
+      _handle(uri, callback);
     });
     final pending = _pendingUri;
     _pendingUri = null;
     if (pending != null) {
-      _handle(pending, installConfigCallBack);
+      _handle(pending, callback);
     }
   }
 
-  void _handle(Uri uri, Function(String url) installConfigCallBack) {
+  void _handle(Uri uri, ImportCaptureCallback callback) {
     commonPrint.log('onAppLink: $uri');
-    final url = _installConfigUrl(uri);
-    if (url != null) {
-      installConfigCallBack(url);
+    final capture = resolveImportCaptureFromTexts([uri.toString()]);
+    if (capture != null) {
+      callback(capture);
+      return;
+    }
+    final installUrl = installConfigUrlFromUri(uri)?.trim();
+    if (installUrl != null) {
+      callback(SubscriptionImportCapture(installUrl));
     }
   }
 

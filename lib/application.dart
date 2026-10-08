@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:fl_clash/common/common.dart';
+import 'package:fl_clash/fluxa/integration/import_capture.dart';
 import 'package:fl_clash/common/window.dart';
 import 'package:fl_clash/bootstrap.dart';
 import 'package:fl_clash/common/system_dns.dart';
@@ -106,32 +107,48 @@ class ApplicationState extends ConsumerState<Application> {
   }
 
   void _initLink() {
-    linkManager.initAppLinksListen((url) async {
+    linkManager.initAppLinksListen((capture) async {
       unawaited(window?.show());
-      final message = currentAppLocalizations.createProfileFromUrlTip(url);
-      final parts = message.split(url);
-      final res = await dialogs.showMessage(
-        title: currentAppLocalizations.addProfile,
-        message: TextSpan(
-          children: [
-            TextSpan(text: parts.first),
-            TextSpan(
-              text: url,
-              style: TextStyle(
-                color: context.colorScheme.primary,
-                decoration: TextDecoration.underline,
-                decorationColor: context.colorScheme.primary,
-              ),
-            ),
-            if (parts.length > 1) TextSpan(text: parts.last),
-          ],
-        ),
-      );
-      if (res != true) return;
+      final confirmed = await switch (capture) {
+        SubscriptionImportCapture(:final url) => _confirmSubscriptionImport(url),
+        NodeImportCapture(:final node) => _confirmNodeImport(node.name),
+      };
+      if (confirmed != true) {
+        return;
+      }
       unawaited(
-        ref.read(profilesActionProvider.notifier).addProfileFormURL(url),
+        ref.read(profilesActionProvider.notifier).importCaptureResult(capture),
       );
     });
+  }
+
+  Future<bool?> _confirmSubscriptionImport(String url) {
+    final message = currentAppLocalizations.createProfileFromUrlTip(url);
+    final parts = message.split(url);
+    return dialogs.showMessage(
+      title: currentAppLocalizations.addProfile,
+      message: TextSpan(
+        children: [
+          TextSpan(text: parts.first),
+          TextSpan(
+            text: url,
+            style: TextStyle(
+              color: context.colorScheme.primary,
+              decoration: TextDecoration.underline,
+              decorationColor: context.colorScheme.primary,
+            ),
+          ),
+          if (parts.length > 1) TextSpan(text: parts.last),
+        ],
+      ),
+    );
+  }
+
+  Future<bool?> _confirmNodeImport(String nodeName) {
+    return dialogs.showMessage(
+      title: currentAppLocalizations.addProfile,
+      message: TextSpan(text: 'Import node "$nodeName"?'),
+    );
   }
 
   void _autoUpdateProfilesTask() {

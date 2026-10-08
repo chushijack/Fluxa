@@ -1,11 +1,12 @@
 import 'dart:async';
 
 import 'package:fl_clash/common/link.dart';
+import 'package:fl_clash/fluxa/integration/import_capture.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   late StreamController<Uri> links;
-  late List<String> received;
+  late List<ImportCaptureResult> received;
 
   setUp(() {
     links = StreamController<Uri>.broadcast();
@@ -27,6 +28,13 @@ void main() {
     await Future<void>.delayed(Duration.zero);
   }
 
+  String? subscriptionUrl(ImportCaptureResult result) {
+    return switch (result) {
+      SubscriptionImportCapture(:final url) => url,
+      _ => null,
+    };
+  }
+
   test('LinkManager is a singleton', () {
     expect(LinkManager(), same(linkManager));
   });
@@ -36,7 +44,7 @@ void main() {
 
     await emit('flclash://install-config?url=https://example.com/a.yaml');
 
-    expect(received, ['https://example.com/a.yaml']);
+    expect(subscriptionUrl(received.single), 'https://example.com/a.yaml');
   });
 
   test('an install-config link without a url is ignored', () async {
@@ -65,7 +73,7 @@ void main() {
 
     await emit('flclash://install-config?url=https://example.com/a.yaml');
 
-    expect(received, ['https://example.com/a.yaml']);
+    expect(subscriptionUrl(received.single), 'https://example.com/a.yaml');
   });
 
   test(
@@ -80,11 +88,11 @@ void main() {
 
       await listen();
 
-      expect(received, ['https://example.com/a.yaml']);
+      expect(subscriptionUrl(received.single), 'https://example.com/a.yaml');
 
       await listen();
 
-      expect(received, ['https://example.com/a.yaml']);
+      expect(received, hasLength(1));
     },
   );
 
@@ -132,7 +140,6 @@ void main() {
           null,
           '',
           'plain text',
-          'vmess://eyJhZGQiOiIxLjIuMy40In0=',
           'https://',
           'clash://install-config?url=not-a-url',
           'clash://open-profile?url=https://example.com/a.yaml',
