@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:fl_clash/common/constant.dart';
 import 'package:win32_registry/win32_registry.dart';
 
 import 'print.dart';
@@ -52,7 +53,7 @@ class LinuxProtocolRegistrationPlan {
   String get desktopEntry => [
     '[Desktop Entry]',
     'Type=Application',
-    'Name=FlClash',
+    'Name=$appName',
     'NoDisplay=true',
     'Exec=$exec',
     'MimeType=${mimeTypes.join(';')};',

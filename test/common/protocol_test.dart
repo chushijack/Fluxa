@@ -6,14 +6,14 @@ void main() {
     test('builds registry writes for URL protocol registration', () {
       const plan = ProtocolRegistrationPlan(
         scheme: 'flclash',
-        executable: r'C:\Program Files\FlClash\FlClash.exe',
+        executable: r'C:\Program Files\Fluxa\Fluxa.exe',
       );
 
       expect(plan.protocolKey, r'Software\Classes\flclash');
       expect(plan.commandKey, r'shell\open\command');
       expect(plan.protocolValueName, 'URL Protocol');
       expect(plan.protocolValue, '');
-      expect(plan.command, r'"C:\Program Files\FlClash\FlClash.exe" "%1"');
+      expect(plan.command, r'"C:\Program Files\Fluxa\Fluxa.exe" "%1"');
     });
   });
 
@@ -33,7 +33,7 @@ void main() {
         plan.desktopEntry,
         '[Desktop Entry]\n'
         'Type=Application\n'
-        'Name=FlClash\n'
+        'Name=Fluxa\n'
         'NoDisplay=true\n'
         'Exec="/home/me/Apps/FlClash.AppImage" %u\n'
         'MimeType=x-scheme-handler/clash;x-scheme-handler/clashmeta;'

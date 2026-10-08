@@ -2,6 +2,16 @@
 abstract final class FluxaBrand {
   static const productName = 'Fluxa';
 
+  /// Desktop Mihomo core binary base name (`.exe` on Windows).
+  static const coreBinaryName = 'FluxaCore';
+
+  /// Desktop Helper binary / Windows service base name.
+  static const helperServiceName = 'FluxaHelperService';
+
+  static const helperProtocolHeader = 'x-fluxa-helper-protocol';
+
+  static const linuxHelperSystemdUnit = 'fluxa-helper';
+
   static const originRepository = 'chushijack/Fluxa';
 
   static const upstreamRepository = 'chen08209/FlClash';

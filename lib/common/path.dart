@@ -59,7 +59,7 @@ class AppPath {
   }
 
   String get corePath {
-    return join(executableDirPath, 'FlClashCore$executableExtension');
+    return join(executableDirPath, '$appCoreName$executableExtension');
   }
 
   String get helperPath {

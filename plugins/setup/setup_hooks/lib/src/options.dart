@@ -31,11 +31,11 @@ class BuildConfig {
     tags: 'with_gvisor',
     goLdflags: '-w -s',
     coreDir: 'core',
-    coreName: 'FlClashCore',
+    coreName: 'FluxaCore',
     libName: 'libclash',
     outputDir: 'libclash',
     helperDir: 'services/helper',
-    helperName: 'FlClashHelperService',
+    helperName: 'FluxaHelperService',
   );
 
   static BuildConfig load({required String rootDir}) {
