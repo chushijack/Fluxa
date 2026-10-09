@@ -390,7 +390,7 @@
             'tipIntentTitle',
             'tipIntent',
             commandBlock(
-              ['com.follow.clash.action.START', 'com.follow.clash.action.STOP', 'com.follow.clash.action.TOGGLE'].join(
+              ['com.follow.fluxa.action.START', 'com.follow.fluxa.action.STOP', 'com.follow.fluxa.action.TOGGLE'].join(
                 '\n',
               ),
             ),

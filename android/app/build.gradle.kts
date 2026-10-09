@@ -36,7 +36,9 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.follow.clash"
+        // Install identity only. Kotlin packages, ComponentName, and Flutter
+        // method channels stay on com.follow.clash.
+        applicationId = "com.follow.fluxa"
         minSdk = flutter.minSdkVersion
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = flutter.versionCode

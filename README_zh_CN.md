@@ -67,12 +67,12 @@ Fluxa 以 **[GPL-3.0](LICENSE)** 发布。FlClash 为上游项目；同步或再
 
 **订阅导入** 与 FlClash 相同，支持 `clash://`、`clashmeta://`、`flclash://` 等链接形式。
 
-**Android 自动化**（当前包名仍为 `com.follow.clash`）：
+**Android 自动化**（包名 `com.follow.fluxa`）：
 
 ```text
-com.follow.clash.action.START
-com.follow.clash.action.STOP
-com.follow.clash.action.TOGGLE
+com.follow.fluxa.action.START
+com.follow.fluxa.action.STOP
+com.follow.fluxa.action.TOGGLE
 ```
 
 ## 从源码构建

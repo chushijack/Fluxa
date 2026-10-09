@@ -66,6 +66,18 @@ void main() {
     }
   });
 
+  test('Android install id is com.follow.fluxa', () {
+    final gradle = File('android/app/build.gradle.kts').readAsStringSync();
+    final services = File(
+      'android/app/google-services.json',
+    ).readAsStringSync();
+
+    expect(gradle, contains('applicationId = "com.follow.fluxa"'));
+    expect(gradle, contains('namespace = "com.follow.clash"'));
+    expect(services, contains('"package_name": "com.follow.fluxa"'));
+    expect(services, contains('"package_name": "com.follow.fluxa.dev"'));
+  });
+
   test('windows installer uses Fluxa display and executable names', () {
     final config =
         loadYaml(

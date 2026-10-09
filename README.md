@@ -67,12 +67,12 @@ Sync workflow: `sync/flclash-<version>` → `dev` → `main`. Details in [docs/f
 
 **Subscription import** uses the same link schemes as FlClash (`clash://`, `clashmeta://`, `flclash://`, and related forms).
 
-**Android automation** (package still `com.follow.clash` until changed):
+**Android automation** (package `com.follow.fluxa`):
 
 ```text
-com.follow.clash.action.START
-com.follow.clash.action.STOP
-com.follow.clash.action.TOGGLE
+com.follow.fluxa.action.START
+com.follow.fluxa.action.STOP
+com.follow.fluxa.action.TOGGLE
 ```
 
 ## Build from source
