@@ -51,6 +51,11 @@
           "type": "fix",
           "entries": [
             {
+              "id": "ff25775",
+              "scope": "fluxa",
+              "text": "Install Android as com.follow.fluxa"
+            },
+            {
               "id": "bdfc539",
               "scope": "fluxa",
               "text": "Name the Linux executable and packages Fluxa"
